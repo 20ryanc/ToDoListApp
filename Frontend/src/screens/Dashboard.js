@@ -1,19 +1,21 @@
 import React from 'react'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
+import { StyleSheet, Text, View } from 'react-native'
+import Task from '../components/Task'
+import { theme } from '../core/theme'
 import Header from '../components/Header'
-import Paragraph from '../components/Paragraph'
 import Button from '../components/Button'
 
 export default function Dashboard({ navigation }) {
   return (
-    <Background>
-      <Logo />
-      <Header>Let’s start</Header>
-      <Paragraph>
-        Your amazing app starts here. Open you favorite code editor and start
-        editing this project.
-      </Paragraph>
+    <View style={styles.container}>
+      <View style={styles.tasksWrapper}>
+        <Header>Today's Task</Header>
+
+        <View style={styles.item}>
+          <Task text={'Task1'} />
+          <Task text={'Task2'} />
+        </View>
+      </View>
       <Button
         mode="outlined"
         onPress={() =>
@@ -22,9 +24,26 @@ export default function Dashboard({ navigation }) {
             routes: [{ name: 'StartScreen' }],
           })
         }
+        style={styles.logout}
       >
         Logout
       </Button>
-    </Background>
-  )
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.surface,
+  },
+  tasksWrapper: {
+    paddingTop: 80,
+    paddingHorizontal: 20,
+  },
+  items: {},
+  logout: {
+    position: 'absolute',
+    bottom: 30
+  },
+});
