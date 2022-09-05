@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Task from '../components/Task'
 import { theme } from '../core/theme'
 import Header from '../components/Header'
@@ -8,6 +8,19 @@ import Button from '../components/Button'
 export default function Dashboard({ navigation }) {
   return (
     <View style={styles.container}>
+      <View style={styles.logout}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'StartScreen' }],
+            })
+          }
+        >
+        <Text style={styles.logoutText}>Logout</Text>
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.tasksWrapper}>
         <Header>Today's Task</Header>
 
@@ -16,18 +29,6 @@ export default function Dashboard({ navigation }) {
           <Task text={'Task2'} />
         </View>
       </View>
-      <Button
-        mode="outlined"
-        onPress={() =>
-          navigation.reset({
-            index: 0,
-            routes: [{ name: 'StartScreen' }],
-          })
-        }
-        style={styles.logout}
-      >
-        Logout
-      </Button>
     </View>
   );
 }
@@ -35,15 +36,24 @@ export default function Dashboard({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.background,
   },
   tasksWrapper: {
-    paddingTop: 80,
+    paddingTop: 5,
     paddingHorizontal: 20,
   },
-  items: {},
-  logout: {
-    position: 'absolute',
-    bottom: 30
+  items: {
+    marginTop: 30,
+    
   },
+  logout: {
+    zIndex: 1,
+    position: 'relative',
+    marginTop: 40,
+    marginLeft: 315,
+  },
+  logoutText: {
+    fontWeight: 'bold',
+    color: theme.colors.primary,
+  }
 });
