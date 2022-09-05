@@ -1,5 +1,4 @@
 package com.example.demo.api;
-import com.example.demo.dao.EntryRepository;
 import com.example.demo.model.Entry;
 import com.example.demo.model.Entrytmp;
 import com.example.demo.model.User;

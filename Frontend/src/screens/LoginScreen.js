@@ -10,25 +10,32 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
-import { runall } from '../helpers/connector'
+import { login } from '../helpers/connector'
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onLoginPressed = () => {
-    runall();
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
+  async function onLoginPressed() {
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
       return
+    }else{
+      login(email.value, password.value).then(()=>{
+        console.log("login");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Dashboard' }],
+        });
+      }).catch(()=>{
+        console.log("login failed");
+        setEmail({ ...email, error: "Incorrect Email or" });
+        setPassword({ ...password, error: "Incorrect password" });
+      });
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
   }
 
   return (
