@@ -1,5 +1,4 @@
 package com.example.demo.api;
-import com.example.demo.dao.EntryRepository;
 import com.example.demo.model.Entry;
 import com.example.demo.model.Entrytmp;
 import com.example.demo.model.User;
@@ -87,10 +86,9 @@ public class UserAPI {
         userService.addUser(user);
     }
 
-    @DeleteMapping("/{email}")
-    public void deleteUser(@PathVariable("email") String email){
-        System.out.println(email);
-        userService.removeUser(email);
+    @DeleteMapping("/delete")
+    public void deleteUser(Principal principal){
+        userService.removeUser(principal.getName());
     }
 
 }
