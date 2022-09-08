@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput, Keyboard } from 'react-native'
+import { StyleSheet, Modal, Pressable, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput, Keyboard } from 'react-native'
 import Task from '../components/Task'
 import { theme } from '../core/theme'
 import Header from '../components/Header'
@@ -8,6 +8,7 @@ import { logout } from '../helpers/connector'
 export default function Dashboard({ navigation }) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleAddTask = () => {
     Keyboard.dismiss();
@@ -37,7 +38,38 @@ export default function Dashboard({ navigation }) {
         <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
       </View>
-
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.logoutText}>Finished you task?</Text>
+            <Pressable
+              style={[styles.button]}
+              onPress={() => {
+                completeTask()
+                setModalVisible(!modalVisible)
+              }}
+            >
+              <Text>YES</Text>
+            </Pressable>
+            <Pressable
+              style={[styles.button]}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+              }}
+            >
+              <Text>NOT YET</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.tasksWrapper}>
         <Header>Today's Task</Header>
 
@@ -45,7 +77,7 @@ export default function Dashboard({ navigation }) {
           {
             taskItems.map((item, index) => {
               return (
-                <TouchableOpacity key={index}  onPress={() => completeTask(index)}>
+                <TouchableOpacity key={index}  onPress={() => setModalVisible(true)}>
                   <Task text={item} /> 
                 </TouchableOpacity>
               )
@@ -124,4 +156,30 @@ const styles = StyleSheet.create({
     borderWidth: 1.
   },
   addText: {},
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#00F",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
 });
