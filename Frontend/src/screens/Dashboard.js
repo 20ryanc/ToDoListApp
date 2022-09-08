@@ -8,7 +8,8 @@ import { logout } from '../helpers/connector'
 export default function Dashboard({ navigation }) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [search, setSearch] = useState("");
 
   const handleAddTask = () => {
@@ -40,12 +41,44 @@ export default function Dashboard({ navigation }) {
         </TouchableOpacity>
       </View>
       <Modal
-        animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={menuModalVisible}
         onRequestClose={() => {
           Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
+          setMenuModalVisible(!menuModalVisible);
+        }}
+      >
+        <View style={DashboardStyles.centeredView}>
+          <View style={DashboardStyles.modalView}>
+            <Text style={DashboardStyles.logoutText}>Menu</Text>
+            <Pressable
+              style={[DashboardStyles.button]}
+              onPress={() => {
+                setMenuModalVisible(!menuModalVisible)
+                // Third party functions here!
+              }}
+            >
+              <Text>Third Party Function</Text>
+            </Pressable>
+            <Pressable
+              style={[DashboardStyles.button]}
+              onPress={() => {
+                setMenuModalVisible(!menuModalVisible)
+                setDeleteModalVisible(!deleteModalVisible)
+              }}
+            >
+              <Text>Delete</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={deleteModalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setDeleteModalVisible(!deleteModalVisible);
         }}
       >
         <View style={DashboardStyles.centeredView}>
@@ -55,7 +88,7 @@ export default function Dashboard({ navigation }) {
               style={[DashboardStyles.button]}
               onPress={() => {
                 completeTask()
-                setModalVisible(!modalVisible)
+                setDeleteModalVisible(!deleteModalVisible)
               }}
             >
               <Text>YES</Text>
@@ -63,7 +96,7 @@ export default function Dashboard({ navigation }) {
             <Pressable
               style={[DashboardStyles.button]}
               onPress={() => {
-                setModalVisible(!modalVisible)
+                setDeleteModalVisible(!deleteModalVisible)
               }}
             >
               <Text>NOT YET</Text>
@@ -86,7 +119,7 @@ export default function Dashboard({ navigation }) {
             })
             .map((item, index) => {
               return (
-                <TouchableOpacity key={index}  onPress={() => setModalVisible(true)}>
+                <TouchableOpacity key={index}  onPress={() => setMenuModalVisible(true)}>
                   <Task text={item} /> 
                 </TouchableOpacity>
               )

@@ -23,6 +23,7 @@ export const DashboardStyles = StyleSheet.create({
     logoutText: {
       fontWeight: 'bold',
       color: theme.colors.primary,
+      margin: 3,
     },
     writeTaskWrapper: {
       position: 'absolute',
@@ -93,8 +94,29 @@ export const DashboardStyles = StyleSheet.create({
     },
     button: {
       borderRadius: 20,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
       padding: 10,
-      elevation: 2
+      marginBottom: 10,
+      elevation: 2,
+      fontWeight: "bold",
+      color: theme.colors.primary,
+      backgroundColor: "#00000",
+    },
+    menuModal: {
+      margin: 20,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#00F",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
     },
   });
   
