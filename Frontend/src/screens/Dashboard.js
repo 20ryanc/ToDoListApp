@@ -9,7 +9,7 @@ export default function Dashboard({ navigation }) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [search, setSearch] = useState();
+  const [search, setSearch] = useState("");
 
   const handleAddTask = () => {
     Keyboard.dismiss();
