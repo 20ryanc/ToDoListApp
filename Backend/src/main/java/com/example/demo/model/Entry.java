@@ -12,18 +12,16 @@ public class Entry {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
-    private String title;
     @Lob
-    private String content;
+    private String title;
     private int count;
 
     public Entry() {
     }
 
-    public Entry(String email, String title, String content, int count) {
+    public Entry(String email, String title, int count) {
         this.email = email;
         this.title = title;
-        this.content = content;
         this.count = count;
     }
 
@@ -41,13 +39,5 @@ public class Entry {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 }

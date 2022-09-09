@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Entrytmp {
     @JsonProperty("title")
     private String title;
-    @JsonProperty("content")
-    private String content;
 
     public String getTitle() {
         return title;
@@ -16,16 +14,12 @@ public class Entrytmp {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Entrytmp(String title, String content) {
+    public Entrytmp(String title) {
         this.title = title;
-        this.content = content;
+    }
+
+    public Entrytmp(){
+
     }
 }

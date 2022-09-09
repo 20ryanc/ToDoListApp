@@ -39,7 +39,7 @@ public class UserAPI {
     public void insertEntry(Principal principal, @RequestBody List<Entrytmp> entryList){
         for(int i = 0; i < entryList.size(); i++){
             Entrytmp etmp = entryList.get(i);
-            Entry tmp = new Entry(principal.getName(), etmp.getTitle(), etmp.getContent(), i);
+            Entry tmp = new Entry(principal.getName(), etmp.getTitle(), i);
             userService.insertEntry(tmp);
         }
     }
@@ -48,7 +48,7 @@ public class UserAPI {
     public List<Entrytmp> getEntry(Principal principal){
         List<Entrytmp> ret = new ArrayList<Entrytmp>();
         for(Entry tmp : userService.getAllEntry(principal.getName())){
-            ret.add(new Entrytmp(tmp.getTitle(),tmp.getContent()));
+            ret.add(new Entrytmp(tmp.getTitle()));
         }
         return ret;
     }
