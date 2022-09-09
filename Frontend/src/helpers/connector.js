@@ -88,11 +88,14 @@ export async function getEntry(){
     return content;
 }
 
-export async function deleteEntry(){
+export async function deleteEntry(title){
 
   let content = await client({
       method: 'delete',
       url: url+"deleteEntry",
+      data: {
+        title: title,
+      },
       withCredentials: true
     });
   return content;

@@ -53,6 +53,12 @@ public class UserService implements UserDetailsService {
         entryRepository.deleteAllEntry(email);
     }
 
+    public void deleteEntry(String email, Integer id) {
+        System.out.println(email);
+        System.out.println(id);
+        entryRepository.deleteEntry(email, id);
+    }
+
     public void insertEntry(Entry entry){
         entryRepository.save(entry);
     }

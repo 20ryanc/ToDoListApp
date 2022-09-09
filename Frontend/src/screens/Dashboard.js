@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
-import { Modal, Pressable, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput, Keyboard } from 'react-native'
+import { Modal, Pressable, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput, Keyboard, ScrollView, SafeAreaView } from 'react-native'
 import Task from '../components/Task'
 import { DashboardStyles } from '../core/dashboardStyle'
 import Header from '../components/Header'
-import { logout } from '../helpers/connector'
+import {insertEntry, logout, getEntry, deleteEntry } from '../helpers/connector'
 
 export default function Dashboard({ navigation }) {
   const [task, setTask] = useState();
@@ -11,17 +11,45 @@ export default function Dashboard({ navigation }) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [search, setSearch] = useState("");
+  const [begin, setBegin] = useState(true);
+
+  if (begin) {
+      setBegin(false);
+      getEntry().then((content) => {
+          console.log(content.data);
+          let arr = [];
+          content.data.forEach((obj) => {
+              arr.push(obj.title);
+          });
+          setTaskItems(arr);
+      })
+  }
 
   const handleAddTask = () => {
     Keyboard.dismiss();
-    setTaskItems([...taskItems, task]);
-    setTask(null);
+    console.log(task);
+    console.log(task.value);
+    insertEntry([
+            {
+                "title": task,
+            },
+        ]).then(()=>{
+        setTaskItems([...taskItems, task]);
+        setTask(null);
+    }).catch(()=>{
+        console.log("Failed to add task");
+    })
   }
 
   const completeTask = (index) => {
-    let itemsCopy = [...taskItems];
-    itemsCopy.splice(index,1);
-    setTaskItems(itemsCopy);
+    console.log(taskItems.at(index));
+    deleteEntry(taskItems.at(index)).then(()=>{
+      let itemsCopy = [...taskItems];
+      itemsCopy.splice(index,1);
+      setTaskItems(itemsCopy);
+    }).catch((err)=>{
+      console.log(err);
+    })
   }
 
   return (
@@ -111,21 +139,21 @@ export default function Dashboard({ navigation }) {
             placeholder={"Search..."} 
             value={search} 
             onChangeText={text => setSearch(text)}/>
-        <View style={DashboardStyles.item}>
-          {
-            taskItems
-            .filter((item) => {
-              if (item.toUpperCase().includes(search.toUpperCase())) {return item}
-            })
-            .map((item, index) => {
-              return (
-                <TouchableOpacity key={index}  onPress={() => setMenuModalVisible(true)}>
-                  <Task text={item} /> 
-                </TouchableOpacity>
-              )
-            })
-          }
-        </View>
+            <ScrollView style={DashboardStyles.item}>
+              {
+                taskItems
+                  .filter((item) => {
+                    if (item.toUpperCase().includes(search.toUpperCase())) {return item}
+                  })
+                  .map((item, index) => {
+                    return (
+                      <TouchableOpacity key={index}  onPress={() => setMenuModalVisible(true)}>
+                        <Task text={item} />
+                      </TouchableOpacity>
+                    )
+                  })
+              }
+            </ScrollView>
       </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height" }

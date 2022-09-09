@@ -1,7 +1,6 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Entry;
-import com.example.demo.model.Entrytmp;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +17,9 @@ public interface EntryRepository extends JpaRepository<Entry, Integer> {
     @Transactional
     @Query(value = "DELETE FROM Entry e WHERE e.email = ?1")
     void deleteAllEntry(String email);
+
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM Entry e WHERE e.email = ?1 AND e.id = ?2")
+    void deleteEntry(String email, Integer id);
 }

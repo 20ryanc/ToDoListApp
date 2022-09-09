@@ -54,8 +54,17 @@ public class UserAPI {
     }
 
     @DeleteMapping("/deleteEntry")
-    public void deleteEntry(Principal principal){
-        userService.deleteAllEntry(principal.getName());
+    public void deleteEntry(Principal principal, @RequestBody Map<String, String> body) {
+        String task = body.get("title");
+        Entry target = null;
+        for(Entry tmp : userService.getAllEntry(principal.getName())){
+            if (tmp.getTitle().equals(task)) {
+                target = tmp;
+                break;
+            }
+        }
+
+        userService.deleteEntry(principal.getName(), target.getId());
     }
 
     @PostMapping("/logout")

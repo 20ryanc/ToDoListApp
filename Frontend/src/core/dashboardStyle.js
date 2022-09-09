@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import { theme } from '../core/theme'
 
 export const DashboardStyles = StyleSheet.create({
@@ -9,10 +9,11 @@ export const DashboardStyles = StyleSheet.create({
     tasksWrapper: {
       paddingTop: 5,
       paddingHorizontal: 20,
+      flex: 1,
     },
     items: {
+      flex: 1,
       marginTop: 30,
-      
     },
     logout: {
       zIndex: 1,
