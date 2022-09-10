@@ -11,6 +11,8 @@ export default function Dashboard({ navigation }) {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [begin, setBegin] = useState(true);
+  const [taskError, setTaskError] = useState("");
+  const [deleteIndex, setDeleteIndex] = useState(0);
 
   if (begin) {
       setBegin(false);
@@ -27,7 +29,10 @@ export default function Dashboard({ navigation }) {
   const handleAddTask = () => {
     Keyboard.dismiss();
     console.log(task);
-    console.log(task.value);
+    if (task == null) {
+      setTaskError("Task cannot be empty");
+      return;
+    }
     insertEntry([
             {
                 "title": task,
@@ -35,16 +40,18 @@ export default function Dashboard({ navigation }) {
         ]).then(()=>{
         setTaskItems([...taskItems, task]);
         setTask(null);
+        setTaskError("");
     }).catch(()=>{
         console.log("Failed to add task");
     })
   }
 
-  const completeTask = (index) => {
-    console.log(taskItems.at(index));
-    deleteEntry(taskItems.at(index)).then(()=>{
+  const completeTask = () => {
+    console.log(deleteIndex);
+    console.log(taskItems.at(deleteIndex));
+    deleteEntry(taskItems.at(deleteIndex)).then(()=>{
       let itemsCopy = [...taskItems];
-      itemsCopy.splice(index,1);
+      itemsCopy.splice(deleteIndex,1);
       setTaskItems(itemsCopy);
     }).catch((err)=>{
       console.log(err);
@@ -60,7 +67,7 @@ export default function Dashboard({ navigation }) {
               index: 0,
               routes: [{ name: 'StartScreen' }],
             });
-            logout().then(()=>console.log("logout")).catch(()=>(consol.log("logout failed")));
+            logout().then(()=>console.log("logout")).catch(()=>(console.log("logout failed")));
             }
           }
         >
@@ -114,7 +121,10 @@ export default function Dashboard({ navigation }) {
                   })
                   .map((item, index) => {
                     return (
-                      <TouchableOpacity key={index}  onPress={() => setDeleteModalVisible(true)}>
+                      <TouchableOpacity key={index}  onPress={() => {
+                        setDeleteModalVisible(true);
+                        setDeleteIndex(index);
+                      }}>
                         <Task text={item} />
                       </TouchableOpacity>
                     )
@@ -128,14 +138,16 @@ export default function Dashboard({ navigation }) {
       >
           <TextInput style={DashboardStyles.input} 
             placeholder={"write a task"} 
-            value={task} 
-            onChangeText={text => setTask(text)}/>
+            value={task}
+            onChangeText={text => setTask(text)}
+          />
           <TouchableOpacity onPress={() => handleAddTask()}>
             <View style={DashboardStyles.addWrapper}>
               <Text style={DashboardStyles.addText}>+</Text>
             </View>
           </TouchableOpacity>
       </KeyboardAvoidingView>
+      {taskError != null && <Text style={DashboardStyles.error}>{taskError}</Text>}
     </View>
   );
 }
