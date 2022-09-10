@@ -32,12 +32,12 @@ export default function RegisterScreen({ navigation }) {
             routes: [{ name: 'Dashboard' }],
           });
         }).catch(()=>{
-          setEmail({ ...email, error: "Something Went Wrong" })
-          setPassword({ ...password, error: "Something Went Wrong" })
+          setEmail({ ...email, error: "The email already exists!" })
+          setPassword({ ...password, error: "The email already exists!" })
         })
       }).catch(()=>{
-        setEmail({ ...email, error: "Something Went Wrong" })
-        setPassword({ ...password, error: "Something Went Wrong" })
+        setEmail({ ...email, error: "The email already exists!" })
+        setPassword({ ...password, error: "The email already exists!" })
       });
     }
   }

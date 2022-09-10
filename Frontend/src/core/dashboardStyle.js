@@ -119,5 +119,12 @@ export const DashboardStyles = StyleSheet.create({
       shadowRadius: 4,
       elevation: 5
     },
+    error: {
+      position: 'absolute',
+      bottom: 35,
+      left: 30,
+      fontSize: 15,
+      color: "#FF0000",
+    }
   });
   
