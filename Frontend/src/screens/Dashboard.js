@@ -9,7 +9,6 @@ export default function Dashboard({ navigation }) {
   const [task, setTask] = useState();
   const [taskItems, setTaskItems] = useState([]);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [menuModalVisible, setMenuModalVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [begin, setBegin] = useState(true);
 
@@ -69,38 +68,6 @@ export default function Dashboard({ navigation }) {
         </TouchableOpacity>
       </View>
       <Modal
-        transparent={true}
-        visible={menuModalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setMenuModalVisible(!menuModalVisible);
-        }}
-      >
-        <View style={DashboardStyles.centeredView}>
-          <View style={DashboardStyles.modalView}>
-            <Text style={DashboardStyles.logoutText}>Menu</Text>
-            <Pressable
-              style={[DashboardStyles.button]}
-              onPress={() => {
-                setMenuModalVisible(!menuModalVisible)
-                // Third party functions here!
-              }}
-            >
-              <Text>Third Party Function</Text>
-            </Pressable>
-            <Pressable
-              style={[DashboardStyles.button]}
-              onPress={() => {
-                setMenuModalVisible(!menuModalVisible)
-                setDeleteModalVisible(!deleteModalVisible)
-              }}
-            >
-              <Text>Delete</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-      <Modal
         animationType="slide"
         transparent={true}
         visible={deleteModalVisible}
@@ -147,7 +114,7 @@ export default function Dashboard({ navigation }) {
                   })
                   .map((item, index) => {
                     return (
-                      <TouchableOpacity key={index}  onPress={() => setMenuModalVisible(true)}>
+                      <TouchableOpacity key={index}  onPress={() => setDeleteModalVisible(true)}>
                         <Task text={item} />
                       </TouchableOpacity>
                     )
