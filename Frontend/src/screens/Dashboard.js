@@ -40,15 +40,16 @@ export default function Dashboard({ navigation }) {
       setLatitude(location.coords.latitude);
       setLongitude(location.coords.longitude);
     })();
+      axios.get(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`).then((response) => {
+        setWeatherData(response.data);
+        console.log(response.data)
+        while (weatherData === undefined || weatherData === "") {
+          console.log("undefined")
+          window.location.reload(true);
+        }
+        console.log(weatherData)
+      })
     
-    console.log(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`)
-    axios.get(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`).then((response) => {
-      setWeatherData(response.data);
-      if (weatherData === undefined || weatherData === "") {
-        window.location.reload();
-      }
-      console.log(weatherData)
-    })
   }, []);
 
   if (begin) {
@@ -145,8 +146,8 @@ export default function Dashboard({ navigation }) {
       </Modal>
       <View style={DashboardStyles.tasksWrapper}>
         <Header>Task To Be Done</Header>
-        <Text style={DashboardStyles.weatherText}>{"Weather Today:  " + weatherData["weather"][0]["main"]}</Text>
-        <Text style={DashboardStyles.weatherText}>{"Temperature Today:  " + Math.round(weatherData["main"]["temp"]/10, 3) + " °C"}</Text>
+        <Text style={DashboardStyles.weatherText}>{"Weather Today:  " + (weatherData === undefined ? "is great!": weatherData["weather"][0]["main"])}</Text>
+        <Text style={DashboardStyles.weatherText}>{"Temperature Today:  " + (weatherData === undefined? 25: Math.round(weatherData["main"]["temp"]/10, 3)) + " °C"}</Text>
         <Text style={DashboardStyles.weatherText}>Complete your tasks and enjoy the day!</Text>
         {/* Search bar is here */}
         <TextInput style={DashboardStyles.searchBar}
