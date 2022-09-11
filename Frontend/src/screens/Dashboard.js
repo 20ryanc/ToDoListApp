@@ -19,7 +19,7 @@ export default function Dashboard({ navigation }) {
   const [latitude, setLatitude] = useState("");
   const [logitude, setLongitude] = useState("");
   const API_endpoint = "https://api.openweathermap.org/data/2.5/weather?"
-  const API_key = "c5a48b3e59d242aedae7b2fb0b9ad0e4"
+  const API_key = "b57a3f2b0deb775796bbc11f7f0334d2"
   const [errorMsg, setErrorMsg] = useState(null);
   const [weatherData, setWeatherData] = useState();
 
@@ -40,12 +40,12 @@ export default function Dashboard({ navigation }) {
       setLatitude(location.coords.latitude);
       setLongitude(location.coords.longitude);
     })();
+      console.log(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`)
       axios.get(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`).then((response) => {
         setWeatherData(response.data);
         console.log(response.data)
         while (weatherData === undefined || weatherData === "") {
           console.log("undefined")
-          window.location.reload(true);
         }
         console.log(weatherData)
       })
