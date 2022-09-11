@@ -14,7 +14,7 @@ Backend refactored from https://github.com/20ryanc/Note-Backend
 
 ## Run App on iPhone
 1. Download ```expo``` from iOS app store
-2. Followed the instruction displayed in the terminal after running ```npx expo start```
+2. Follow the instruction displayed in the terminal after running ```npx expo start```
 
 ## Online Backend Access:
 https://todolistapphw1.herokuapp.com
