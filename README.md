@@ -1,5 +1,4 @@
-# CS4261 HW1
-## CS4261 minimalistic program project
+# CS4261 HW1: Minimalistic Program Project
 
 ## Credits
 Frontend template credit https://github.com/venits/react-native-login-template
