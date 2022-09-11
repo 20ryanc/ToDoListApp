@@ -7,10 +7,10 @@ Backend refactored from https://github.com/20ryanc/Note-Backend
 
 Frontend Access:
 1. Download Nodejs onto your computer and make sure npm is working. 
-2. Install yarn using "npm install --global yarn"
-3. Install Expo using "npm install --global expo-cli"
-4. Go to frontend folder and excecute "yarn install"
-5. Run using "npx expo start" 
+2. Install yarn using ```npm install --global yarn```
+3. Install Expo using ```npm install --global expo-cli```
+4. Go to frontend folder and excecute ```yarn install```
+5. Run using ```npx expo start```
 
 Online Backend Access:
 https://todolistapphw1.herokuapp.com
