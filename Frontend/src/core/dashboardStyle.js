@@ -26,6 +26,11 @@ export const DashboardStyles = StyleSheet.create({
       color: theme.colors.primary,
       margin: 3,
     },
+    weatherText: {
+      fontWeight: 'bold',
+      color: theme.colors.secondary,
+      margin: 3,
+    },
     writeTaskWrapper: {
       position: 'absolute',
       bottom: 60,
@@ -36,6 +41,7 @@ export const DashboardStyles = StyleSheet.create({
     },
     searchBar: {
       height: 40,
+      marginTop: 10,
       marginBottom: 15,
       paddingHorizontal: 15,
       width: 350,
