@@ -1,9 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { Modal, Pressable, Text, View, TouchableOpacity, KeyboardAvoidingView, Platform, TextInput, Keyboard, ScrollView, SafeAreaView } from 'react-native'
 import Task from '../components/Task'
 import { DashboardStyles } from '../core/dashboardStyle'
 import Header from '../components/Header'
 import {insertEntry, logout, getEntry, deleteEntry } from '../helpers/connector'
+import axios from 'axios'
+import * as Location from 'expo-location';
 
 export default function Dashboard({ navigation }) {
   const [task, setTask] = useState();
@@ -13,6 +15,41 @@ export default function Dashboard({ navigation }) {
   const [begin, setBegin] = useState(true);
   const [taskError, setTaskError] = useState("");
   const [deleteIndex, setDeleteIndex] = useState(0);
+
+  const [latitude, setLatitude] = useState("");
+  const [logitude, setLongitude] = useState("");
+  const API_endpoint = "https://api.openweathermap.org/data/2.5/weather?"
+  const API_key = "c5a48b3e59d242aedae7b2fb0b9ad0e4"
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [weatherData, setWeatherData] = useState();
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        console.log(errorMsg);
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      if (errorMsg) {
+        console.log(errorMsg);
+      } else if (location) {
+        console.log(JSON.stringify(location));
+      }
+      setLatitude(location.coords.latitude);
+      setLongitude(location.coords.longitude);
+    })();
+    
+    console.log(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`)
+    axios.get(`${API_endpoint}lat=${latitude}&lon=${logitude}&appid=${API_key}`).then((response) => {
+      setWeatherData(response.data);
+      if (weatherData === undefined || weatherData === "") {
+        window.location.reload();
+      }
+      console.log(weatherData)
+    })
+  }, []);
 
   if (begin) {
       setBegin(false);
@@ -108,6 +145,9 @@ export default function Dashboard({ navigation }) {
       </Modal>
       <View style={DashboardStyles.tasksWrapper}>
         <Header>Task To Be Done</Header>
+        <Text style={DashboardStyles.weatherText}>{"Weather Today:  " + weatherData["weather"][0]["main"]}</Text>
+        <Text style={DashboardStyles.weatherText}>{"Temperature Today:  " + Math.round(weatherData["main"]["temp"]/10, 3) + " °C"}</Text>
+        <Text style={DashboardStyles.weatherText}>Complete your tasks and enjoy the day!</Text>
         {/* Search bar is here */}
         <TextInput style={DashboardStyles.searchBar}
             placeholder={"Search..."} 
