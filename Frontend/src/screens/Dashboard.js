@@ -146,7 +146,7 @@ export default function Dashboard({ navigation }) {
       </Modal>
       <View style={DashboardStyles.tasksWrapper}>
         <Header>Task To Be Done</Header>
-        <Text style={DashboardStyles.weatherText}>{"Weather Today:  " + (weatherData === undefined ? "is great!": weatherData["weather"][0]["main"])}</Text>
+        <Text style={DashboardStyles.weatherText}>{"Weather Today:  " + (weatherData === undefined ? "Great!": weatherData["weather"][0]["main"])}</Text>
         <Text style={DashboardStyles.weatherText}>{"Temperature Today:  " + (weatherData === undefined? 25: Math.round(weatherData["main"]["temp"]/10, 3)) + " °C"}</Text>
         <Text style={DashboardStyles.weatherText}>Complete your tasks and enjoy the day!</Text>
         {/* Search bar is here */}
