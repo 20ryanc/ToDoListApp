@@ -6,7 +6,7 @@ const jar = new CookieJar();
 const client = wrapper(axios.create({ jar }));
 
 // Heroku deploy: https://cs4261todolist.herokuapp.com/
-var host = "http://localhost:8080";
+var host = "https://cs4261todolist.herokuapp.com";
 
 var url = host + "/api/v1/";
 
